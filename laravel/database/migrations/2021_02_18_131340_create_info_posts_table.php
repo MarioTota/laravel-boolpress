@@ -21,7 +21,7 @@ class CreateInfoPostsTable extends Migration
                 ->references('id')
                 ->on('posts');
 
-            $table->string('commenti');
+            $table->integer('commenti');
             $table->date('data');
             $table->timestamps();
         });
