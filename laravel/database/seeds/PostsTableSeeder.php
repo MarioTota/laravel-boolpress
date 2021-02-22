@@ -3,6 +3,7 @@
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 use App\Post;
+use Illuminate\Support\Str;
 
 class PostsTableSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class PostsTableSeeder extends Seeder
 
             $newPost = New Post();
             $newPost->titolo = $faker->sentence($nbWords = 3, $variableNbWords = true);
+            $newPost->slug = Str::slug($newPost->titolo);
             $newPost->autore = $faker->name();
             $newPost->testo = $faker->text(254);
             $newPost->categoria = $faker->word;

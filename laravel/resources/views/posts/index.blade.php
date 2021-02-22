@@ -21,6 +21,10 @@
             margin: 10px;
             padding: 10px;
         }
+        .linkpost {
+            text-decoration: none;
+            color: black;
+        }
         .hidden {
             visibility: hidden;
         }
@@ -32,16 +36,21 @@
         <div class="posts_container">
             @foreach ($posts as $post)   
             <div class="single_post">
-                <p>{{ $post->titolo }}</p>
-                <p>{{ $post->autore }}</p>
-                <p>{{ substr($post->testo, 60) }}...</p>
-                <p>{{ $post->categoria }}</p>
-                <a href="{{ route('posts.show', ['post' => $post->id]) }}">Commenti : {{ $post->infopost->commenti }}</a>
+                <a class="linkpost" href="{{ route('posts.show', ['post' => $post->id]) }}">
+                    <p>titolo: {{ $post->titolo }}</p>
+                    <p>autore: {{ $post->autore }}</p>
+                    <p>{{ substr($post->testo, 60) }}...</p>
+                    <p>categoria: {{ $post->categoria }}</p>
+                </a>
+                    <a href="{{ route('showcomment', $post->slug) }}">Commenti : {{ dd($post->infopost->commenti) }}</a>
             </div>
             @endforeach
             <div class="single_post hidden"></div>
             <div class="single_post hidden"></div>
             <div class="single_post hidden"></div>
         </div>
+        <button>
+          <a href="{{ route('posts.create') }}">crea post</a>
+        </button>
     </body>
 </html>

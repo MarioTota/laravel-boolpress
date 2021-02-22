@@ -23,8 +23,6 @@ class CreateCommentsTable extends Migration
 
             $table->string('testo');
             $table->string('autore');
-            $table->date('data');
-            $table->timestamps();
         });
     }
 

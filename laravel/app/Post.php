@@ -8,6 +8,7 @@ class Post extends Model
 {
     protected $fillable = [
         'titolo',
+        'slug',
         'autore',
         'testo',
         'categoria'
