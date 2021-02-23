@@ -1,9 +1,10 @@
 <?php
 
-use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
-use App\Post;
 use App\Comment;
+use App\Post;
+use Faker\Generator as Faker;
+
 
 class CommentsTableSeeder extends Seeder
 {
@@ -15,27 +16,21 @@ class CommentsTableSeeder extends Seeder
     public function run(Faker $faker)
     {
         $posts = Post::all();
-        
+
         foreach ($posts as $post) { 
-            for ($i=0; $i < $faker->numberBetween(1,4); $i++) { 
-                
+            
+            for ($i=0; $i < 3; $i++) { 
                 $newComment = New Comment();
+                
+                $data = $faker->datetime();
                 $newComment->post_id = $post->id;
-                $newComment->testo = $faker->text(100);
                 $newComment->autore = $faker->userName;
+                $newComment->testo = $faker->sentence(10);
+                $newComment->created_at = $data;
+                $newComment->updated_at = $data;
+    
                 $newComment->save();
             }
         }
     }
 }
-    //  $table->bigIncrements('id');
-            
-    //         $table->unsignedBigInteger('post_id');
-    //         $table->foreign('post_id')
-    //             ->references('id')
-    //             ->on('posts');
-
-    //         $table->string('testo');
-    //         $table->string('autore');
-    //         $table->date('data');
-    //         $table->timestamps();

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
-use App\InfoPost;
 use Illuminate\Support\Str;
-
+use App\InfoPost;
 
 class PostController extends Controller
 {
@@ -17,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        
+        $posts = Post::all();
+
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -44,15 +45,19 @@ class PostController extends Controller
 
         $post = new Post();
         $post->fill($data);
-        $resultPost = $post->save();
+        $post->save();
 
         $data['post_id'] = $post->id;
-        $infoPost = new InfoPost();
+        $infoPost = New InfoPost();
         $infoPost->fill($data);
-        $resultInfopost = $infoPost->save();
+        $infoPost->save();
+
+        // $data['post_id'] = $post->id;
+        // $infoPost = new InfoPost();
+        // $infoPost->fill($data);
+        // $resultInfopost = $infoPost->save();
 
         return redirect()->route('posts.index');
-
     }
 
     /**
@@ -61,7 +66,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(POST $post)
+    public function show(Post $post)
     {
         return view('posts.show', compact('post'));
     }
@@ -72,9 +77,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -84,9 +89,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['titolo']);
+
+        $post->update($data);
+
+        $infoPost = InfoPost::where('post_id',$post->id)->first();
+        $data['post_id'] = $post->id;
+        $infoPost->update($data);
+
+        return redirect()
+        ->route('posts.index')
+        ->with('message','Post '.$post->titolo.' aggiornato correttamente!');
     }
 
     /**
@@ -95,8 +111,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

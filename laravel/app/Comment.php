@@ -6,14 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    public $timestamps = false;
-
-    protected $fillable = [
+     protected $fillable = [
         'post_id',
-        'testo',
-        'autore'
+        'autore',
+        'testo'
     ];
-     public function Post() {
+
+    public function Post() {
         return $this->belongsTo('App\Post');
     }
 }
