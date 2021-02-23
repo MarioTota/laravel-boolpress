@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
 use App\InfoPost;
+use App\Tag;
+
 
 class PostController extends Controller
 {
@@ -28,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -40,22 +44,20 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // dd($data);
         $data['slug'] = Str::slug($data['titolo']);
 
         $post = new Post();
         $post->fill($data);
-        $post->save();
+        $postSaveResult = $post->save();
 
         $data['post_id'] = $post->id;
         $infoPost = New InfoPost();
         $infoPost->fill($data);
-        $infoPost->save();
+        $infoPostSaveResult = $infoPost->save();
 
-        // $data['post_id'] = $post->id;
-        // $infoPost = new InfoPost();
-        // $infoPost->fill($data);
-        // $resultInfopost = $infoPost->save();
+        if ($postSaveResult && !empty($data['tags'])) {
+            $post->tags()->attach($data['tags']);
+        }        
 
         return redirect()->route('posts.index');
     }
@@ -96,6 +98,8 @@ class PostController extends Controller
 
         $post->update($data);
 
+
+        $infoPost = $post->infoPost;
         $infoPost = InfoPost::where('post_id',$post->id)->first();
         $data['post_id'] = $post->id;
         $infoPost->update($data);

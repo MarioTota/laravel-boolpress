@@ -12,6 +12,7 @@
                 </ul>
             </div>
         @endif
+
             <div>
                 <label for="immagine">Inserisci l'immagine</label>
                 <input type="text" name="immagine" placeholder="Inserisci l'immagine"  id="immagine" value="{{ old('immagine') }}"> 
@@ -52,6 +53,13 @@
                     <option value="private" {{ old('comment_status') == 'private' ? 'selected' : '' }}>private</option>
                 </select>
             </div>
+            <h3>Tags</h3>
+            @foreach ($tags as $tag)
+                <div>
+                    <input type="checkbox" id="Tag-{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}">
+                    <label for="Tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                </div>
+            @endforeach
 
             <div style="margin-top: 200px;">
                 <button type="submit">Salva</button>   
