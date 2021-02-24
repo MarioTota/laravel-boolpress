@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{{ route('posts.create') }}">crea post</a>
+
     <img src="{{ $post->immagine }}" alt="">
     <h1>{{ $post->titolo }}</h1>
     {{-- tags --}}

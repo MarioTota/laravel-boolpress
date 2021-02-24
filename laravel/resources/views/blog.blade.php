@@ -23,6 +23,8 @@
 </style>
 <body>
     <h1>Il mio blog</h1>
+    <a href="{{ route('posts.create') }}">crea post</a>
+
     <div class="container">
         @foreach ($posts as $post)
         <div class="card">

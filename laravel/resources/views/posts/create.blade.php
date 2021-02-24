@@ -61,6 +61,15 @@
                 </div>
             @endforeach
 
+            <h3>Images</h3>
+                @foreach ($images as $image)
+                <div>
+                    <input type="checkbox" id="Image-{{ $image->id }}" name="images[]" value="{{ $image->id }}">
+                    <label for="Image-{{ $image->id }}">{{ $image->alt }}                 
+                        <img style="width: 50px;" src="{{ $image->link }}" alt="{{ $image->alt }}">
+                    </label>
+                </div>
+                @endforeach
             <div style="margin-top: 200px;">
                 <button type="submit">Salva</button>   
                 <a href="{{ route('posts.index') }}">Torna all'elelnco</a>         
