@@ -47,6 +47,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        // dd($data);
         $data['slug'] = Str::slug($data['titolo']);
 
         $post = new Post();
@@ -61,6 +62,10 @@ class PostController extends Controller
         if ($postSaveResult && !empty($data['tags'])) {
             $post->tags()->attach($data['tags']);
         }        
+
+        if ($postSaveResult && !empty($data['images'])) {
+            $post->images()->attach($data['images']);
+        }  
 
         return redirect()->route('posts.index');
     }
@@ -85,8 +90,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $tags = Tag::all();
+        $images = Image::all();
 
-        return view('posts.edit', compact('post','tags'));
+
+        return view('posts.edit', compact('post' , 'tags' , 'images'));
     }
 
     /**
@@ -115,6 +122,11 @@ class PostController extends Controller
             $post->tags()->sync($data['tags']);
         }
 
+        if (empty($data['images'])) {
+            $post->images()->detach();
+        } else {
+            $post->images()->sync($data['images']);
+        }
 
 
         return redirect()

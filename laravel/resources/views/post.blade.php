@@ -19,6 +19,20 @@
     <h3>{{ $post->sottotitolo }}</h3>
     <small>{{ $post->autore }} {{ $post->data_pubblicazione }}</small>
     <p>{{ $post->testo }}</p>
+
+    <div>
+        @foreach ($post->images as $image)
+            <div>
+                <figure>
+                    <img style="width:200px;" src="{{ $image->link }}" alt="{{ $image->alt }}">
+                    <figcaption>{{ $image->caption }}</figcaption>
+                </figure>
+            </div>   
+        @endforeach
+    </div>
+
+
+
     <p>post status: {{ $post->infoPost->post_status }}</p>
     <p>comment status: {{ $post->infoPost->comment_status }}</p>
 

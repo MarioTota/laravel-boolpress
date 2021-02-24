@@ -65,6 +65,18 @@
                 </div>
             @endforeach
 
+            <h3>Images</h3>
+                @foreach ($images as $image)
+                <div class="margin">
+                    <input type="checkbox" id="Image-{{ $image->id }}" name="images[]" value="{{ $image->id }}"
+                    @if ($post->images->contains($image->id)) checked @endif
+                    >
+                    <label for="Image-{{ $image->id }}">{{ $image->alt }}                 
+                        <img style="width: 50px;" src="{{ $image->link }}" alt="{{ $image->alt }}">
+                    </label>
+                </div class="margin">
+                @endforeach
+
             <button type="submit">Salva</button>                
         
     </form>
