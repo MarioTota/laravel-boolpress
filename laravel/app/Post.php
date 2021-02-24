@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $with = ['infoPost', 'comments', 'tags'];
     protected $fillable = [
         'titolo',
         'slug',

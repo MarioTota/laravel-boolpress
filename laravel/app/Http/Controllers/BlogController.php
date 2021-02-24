@@ -9,8 +9,13 @@ use App\Comment;
 class BlogController extends Controller
 {
     // dettaglio post front end
-     public function show($slug)
-    {
+     public function index() {
+         
+        $posts = Post::all();
+        return view('blog', compact('posts'));
+    }
+
+     public function show($slug) {
         $post = Post::where('slug',$slug)->firstOrFail();
 
         return view('post', compact('post'));

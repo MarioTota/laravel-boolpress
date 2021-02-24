@@ -54,6 +54,17 @@
                 </select>
             </div>
 
+            {{-- @dump($post->tags) --}}
+            <h3>Tags</h3>
+            @foreach ($tags as $tag)
+                <div>
+                    <input type="checkbox" id="Tag-{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}"
+                    @if ($post->tags->contains($tag->id)) checked @endif
+                    >
+                    <label for="Tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                </div>
+            @endforeach
+
             <button type="submit">Salva</button>                
         
     </form>

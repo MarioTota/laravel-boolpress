@@ -9,6 +9,11 @@
 <body>
     <img src="{{ $post->immagine }}" alt="">
     <h1>{{ $post->titolo }}</h1>
+    {{-- tags --}}
+        @foreach ($post->tags as $tag)
+            <button>{{ $tag->name }}</button>
+        @endforeach
+    {{--/tags --}}
     <h3>{{ $post->sottotitolo }}</h3>
     <small>{{ $post->autore }} {{ $post->data_pubblicazione }}</small>
     <p>{{ $post->testo }}</p>
@@ -45,5 +50,7 @@
             </form>
         </div>
     @endif
+
+    <button><a href="{{ route('blog') }}">torna al blog</a></button>
 </body>
 </html>
