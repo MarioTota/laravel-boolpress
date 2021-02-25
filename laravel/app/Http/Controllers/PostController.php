@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use App\InfoPost;
 use App\Tag;
 use App\Image;
-
+use Carbon\Carbon;
 
 
 class PostController extends Controller
@@ -78,6 +78,23 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $now = new Carbon();
+        // dump($now->toDateTimeString());
+        $adesso = Carbon::now();
+        dump($adesso->toDateTimeString());
+        $oggi = Carbon::today();
+        dump($oggi->toDateTimeString());
+        $ieri = Carbon::yesterday();
+        dump($ieri->toDateTimeString());
+        dump($ieri->format('l d/m/Y'));
+
+        $lezionediieri = Carbon::create(2021, 2, 24, 9, 30, 0, 'Europe/Rome');
+        dump($lezionediieri->format('l d/m/Y H:i:s'));
+
+        $lastweek = Carbon::createFromFormat('d-m-Y' , '25-02-2021');
+        dump($lastweek->format('l d/m/Y H:i:s'));
+
+
         return view('posts.show', compact('post'));
     }
 
